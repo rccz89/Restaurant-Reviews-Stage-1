@@ -1,10 +1,7 @@
-let staticCacheName = 'restaurant-static-v1';
+const cacheName = 'restaurant_reviews_1';
 
-self.addEventListener('install', function(event) {
-	event.waitUntil(
-		caches.open(staticCacheName).then(function(cache) {
-			return cache.addAll([
-				'./',
+const filesToCache = [
+  				'./',
 				'./index.html',
 				'./restaurant.html',
 				'./css/styles.css',
@@ -22,33 +19,50 @@ self.addEventListener('install', function(event) {
 				'./img/7.jpg',
 				'./img/8.jpg',
 				'./img/9.jpg',
-				'./img/10.jpg'
-			]);
-		})
-	);
+				'./img/10.jpg',
+];
+
+/**
+ * Create cache when SW installs
+ */
+self.addEventListener('install', event => {
+  console.log('[ServiceWorker] Install');
+  event.waitUntil(
+    caches.open(cacheName).then(cache => {
+      console.log('[ServiceWorker] Caching app shell');
+      return cache.addAll(filesToCache);
+    }),
+  );
 });
 
-self.addEventListener('activate', function(event) {
-	event.waitUntil(
-		caches.keys()
-		.then(function(cacheNames) {
-			return Promise.all(
-				cacheNames.filter(function(cacheName) {
-					return cacheName.startsWith('restaurant-') &&
-						   cacheName != staticCacheName;
-				}).map(function(cacheName) {
-					return caches.delete(cacheName);
-				})
-			);
-		})
-	);
-})
+/**
+ *  Purge previous cache after activating the next cache
+ */
+self.addEventListener('activate', event => {
+  console.log('[ServiceWorker] Activate');
+  event.waitUntil(
+    caches.keys().then(keyList =>
+      Promise.all(
+        keyList.map(key => {
+          if (key !== cacheName) {
+            return caches.delete(key);
+          }
+        }),
+      ),
+    ),
+  );
+});
 
-self.addEventListener('fetch', function(event) {
-	event.respondWith(
-		caches.match(event.request)
-		.then(function(response) {
-			return response || fetch(event.request);
-		})
-	);
+/**
+ * Respond with cached content if they are matched
+ */
+self.addEventListener('fetch', event => {
+  // Handle query string on /restaurant url
+  const request = event.request.url.includes('/restaurant.html')
+    ? new Request('/restaurant.html')
+    : event.request;
+
+  event.respondWith(
+    caches.match(request).then(response => response || fetch(request)),
+  );
 });
