@@ -306,100 +306,62 @@ nav h1 {
   width: 100%;
 }
 
-/*Media */
-@media only screen and (max-width: 1200px) {
-    .filter-options {
-        flex-direction: column;
-    }
-    .filter-options h2 {
-        font-size: 140%;
-        margin-top: 10px;
-    }
-    .filter-options select {
-        width: 80%;
-    }
-    .filter-options select:last-child {
-        margin-bottom: 20px;
-    }
-}
-/*Small tablets to big tablets: from 768 to 1023px*/
+/* ====================== Aria====================== */
 
-@media only screen and (max-width: 1023px) {
-    .inside header {
-        position: fixed;
-        width: 100%;
-    }
-    .inside #breadcrumb {
-        width: 100%;
-        position: relative;
-    }
-    .inside #map-container {
-        background: blue none repeat scroll 0 0;
-        position: relative;
-        width: 100%;
-        height: 300px;
-        top: 0 !important;
-    }
-    .inside #map {
-        background-color: #ccc;
-        height: 300px;
-        width: 100%;
-        position: relative;
-    }
-    .inside #footer {
-        bottom: 0;
-        position: relative;
-        width: 100%;
-    }
-    #restaurant-container {
-        margin-top: 50px;
-    }
-    #restaurant-container, #reviews-container {
-        border-bottom: 1px solid #d9d9d9;
-        border-top: 1px solid #fff;
-        width: 100%;
-    }
+.aria-label {
+  display: none;
 }
-/*Small phones to small tablets: from 481 to 767px*/
 
-@media only screen and (max-width: 767px) {
-    #restaurant-container, #reviews-container {
-        padding: 0;
-    }
+/* ====================== Responsive media queries ====================== */
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 984px) {
+
+  .filter-selects { 
+    margin: 0px 30px;
+  }
+  
+  #restaurant-container{
+    width:85%;
+  }
+
+  .restaurant-info {
+    width:100%;
+  }
+  
+  #restaurant-img {
+    height: 200px;
+    width: auto;    
+  }
+  #reviews-container{
+    width: 85%;
+  }
+  
 }
-/*Small phones: from 0 to 480px*/
 
-@media only screen and (max-width: 480px) {
-    nav h1 a {
-        margin: auto;
-        font-size: 80%;
-        line-height: 100%;
-    }
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
-    thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-    td {
-        position: relative;
-    }
-    td:before {
-        position: absolute;
-        left: 6px;
-        content: attr(data-th);
-        font-weight: bold;
-    }
-    td:first-of-type {
-        font-weight: bold;
-    }
+@media screen and (min-width: 503px) {
+
+  #restaurants-list li {
+    max-width: 40%;
+  }
+
+  #restaurant-address {
+    font-size: 12pt;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
 }
-/*Small phones: from 0 to 330px*/
 
-@media only screen and (max-width: 330px) {
-    td {
-        font-size: 85%;
-    }
+@media screen and (min-width: 900px) {
+
+  .container, .inside {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #restaurants-list li {
+    max-width: 25%;
+  }
+    
 }
